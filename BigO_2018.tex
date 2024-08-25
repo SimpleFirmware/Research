@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Time Complexity For Dummies}
+\author{Ronald Colyar}
+\date{December 2018}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+In this document we will visit the idea of time complexity and understand why it is vital for everyone engineering software to understand deeply. This document works on the assumption that you as the reader have an understanding of what a program is.
+\section*{What is an algorithm?}
+In the world of "computable problems"  there exists algorithms
+that can solve these "computable problems". An algorithm is a sequence of instructions to solve a well defined problem. 
+
+\section*{Why does time complexity matter?}
+When you are faced with a computable problem and you would like to generate a solution to solve it, you would like to find the most efficient solution to the problem. If you come up with two solutions(Algorithms) for the problem, you are then faced with a very interesting question...
+
+\section*{Which algorithm is more efficient?}
+We measure how efficient an algorithm is by comparing its running time to other algorithms given the same input size. Time complexity is the relationship between an input size and an algorithm's running time by ways of asymptotic notation.
+
+Let $T(n)$ be the running time of an algorithm 
+
+Let $s$ be the number of statements in the algorithm
+
+Let $c$ be the cost of a statement measured by steps of the statement.
+
+Let $t$ be the times that each statement has to execute sometimes dependent on $n$.
+
+$T(n) = \sum_{i=1}^{s}c_it_i(n)$
+
+
+
+\newpage
+\noindent{In order to successfully calculate $c$ or $t$ one must know the details about the algorithm in question. Lets take a look at a simple algorithm that iterates its input, I assume you know how a for loop works, if not please brush up on loops in computation.}
+
+\begin{verbatim}
+Statement one -> t = null 
+Statement two -> for i in j:
+Statement Three->  pass
+\end{verbatim}
+
+\noindent{\textbf{The cost of each statement is dependent on the underlying machine due to the steps being machine dependent, so we will
+just mark them as such:}}
+
+\begin{enumerate}
+    \item statement one's cost: $c_1$
+    \item statement two's cost: $c_2$
+    \item statement three's cost: $c_3$
+\end{enumerate}
+
+\noindent{\textbf{Determine how many times each statement executes}}
+
+\begin{enumerate}
+    \item statement one: 1 time
+    \item statement two: n times
+    \item statement three: n times
+\end{enumerate}
+
+
+\noindent{\textbf {Lets take the product of the cost and times}}
+\begin{enumerate}
+    \item Statement One's Running time:$c_11$
+    \item Statement Two's Running time:$c_2n$
+    \item Statement Three's Running time:$c_3n$
+\end{enumerate}
+
+
+
+\noindent{\textbf {Calculate running time function for this algorithm}}
+\\
+$
+T(n) = \sum_{i=1}^{s}c_it_i(n)
+     = c_11 + c_2n + c_3n
+$
+
+\newpage
+\section*{Big O notation}
+Big O notation is used to classify algorithms according to how their run time grow as the input size grows. The goal is to simplify the running time function to avoid expressing insignificant factors. We only want the dominant factors to be notated when all is done. For this reason we get rid of co-efficients and constants.
+\\
+$T(n) = \sum_{i=1}^{s}c_it_i(n) = c_11 + c_2n + c_3n$
+
+\vspace{0.5cm}
+
+\noindent{Removing the co-efficients and constants yields:}
+$T(n) =  n + n = 2n = n$
+\vspace{0.5cm}
+
+\noindent{The above function will be notated as $O(n)$ which means the running time of the above algorithm is linearly proportional to its input size.} If we found another algorithm for the same problem that has a function of $T(n) = \sum_{i=1}^{s}c_it_i(n) = c_11 + c_2n + c_3n^2$, we would reduce it to $O(n^2)$.
+
+\vspace{0.5cm}
+
+\noindent{We would prefer the $O(n)$ running time algorithm due to it being more efficient than the $O(n^2)$ algorithm. }
+
+\end{document}t
