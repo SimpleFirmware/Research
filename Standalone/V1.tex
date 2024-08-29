@@ -63,4 +63,49 @@ I think this feature will be game changing for racers who would prefer to use th
 \section{No CAN or OBD2 compliance}
 There will be no CAN system on board or any clearable DTCs due to the purpose of this system. There will be clearable warnings and Errors.
 \newpage
+\section{Technical Decisions}
+I would like to document the technical decisions of this project step by step from the start to end.
+\vspace{0.5cm}
+
+\noindent
+\textbf{The VE/Ignition/AFR Memory Structure}
+\vspace{0.5cm}
+
+VE Table =  RPM $\rightarrow$ MAP $\rightarrow$ VE percentage
+
+Boost By gear Table = GEAR $\rightarrow$  MAX BOOST PSI(MAP)
+
+AFR Table = RPM $\rightarrow$ MAP $\rightarrow$ Target AFR
+
+Tune By Gear = GEAR $\rightarrow$ VE Table
+
+\vspace{0.5cm}
+[RPM(s)...MAP(s)...VE Percentages for each rpm(arrays positioned in memory by rpm index and indexed by current MAP)]
+
+\vspace{0.5cm}
+So given we have two rpms [1000,1100] and we defaulted all of the VE percentages to 50\% for 1000 and 40\% for 1100 and we only have three map values [10,20,30], our memory would look this [[1000,1100],[10,20,30], [50,50,50], [40,40,40]].
+
+
+\vspace{0.5cm}
+So the algorithm to get the correct VE while the engine is running would go like this:
+\begin{enumerate}
+    \item Gather the RPM in our RPM array we are closest to
+    \item Use that RPM to generate a reference to the correct VE percentages array
+    \item Gather the MAP in our MAP array we are closest to
+    \item Take the index of the closest MAP and index the VE percentages array
+\end{enumerate}
+
+\vspace{0.5cm}
+So lets walk through an example of this algorithm running in practice... We have this data [[1000,1100],[10,20,30], [51,52,53], [41,42,43]]. 
+
+\vspace{0.5cm}
+RPM = 800, MAP = 10(psi)
+\begin{enumerate}
+    \item closestRpm = 1000
+    \item closestRPMArray = [51,52,53]
+    \item closestMap = 10 , closestMapIndex = 0
+    \item VEPercentage = closestRPMArray[closestMapIndex] = 51\%
+\end{enumerate} 
+
+This is just something I came up with as a first solution, I am certain we can optimize this algorithm a great deal by using hashing techniques, but the goal here is a working MVP before any optimizations.
 \end{document}
