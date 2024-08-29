@@ -108,4 +108,16 @@ RPM = 800, MAP = 10(psi)
 \end{enumerate} 
 
 This is just something I came up with as a first solution, I am certain we can optimize this algorithm a great deal by using hashing techniques, but the goal here is a working MVP before any optimizations.
+\newpage
+
+\textbf{The Tuning Interface and Possible Reuse}
+\vspace{0.2cm}
+
+Apart of this application I would like to create a modern tuning option by making use of a portable high level front-end framework with serial communication. The framework of choice would be Electron.js with a heavy focus on reusability of the components for a cluster setup.
+
+\vspace{0.2cm}
+Tuning/live updates on the frontend would be done using serial communication and this bit of logic can be reused to make a digital cluster, this digital cluster will contain everything we need for warnings and gauges.
+
+\vspace{0.2cm}
+It may be worth it to create a library so that the tuning interface can be fitted to tune any other ECU.
 \end{document}
